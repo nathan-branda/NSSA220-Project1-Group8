@@ -1,12 +1,16 @@
 #!/bin/bash
 
 ip_address=#PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
+
 pid_apm1=""
 pid_apm2=""
 pid_apm3=""
 pid_amp4=""
 pid_apm5=""
 pid_apm6=""
+
+next_run=$SECONDS
+
 function startup () {
     ./project1_executables/APM1
     pid_apm1=$!
@@ -41,8 +45,11 @@ startup
 
 while true; do
     #Implement some timer to make it once per 5 seconds
-    get_process_info
-    get_system_info
+    if [ $SECONDS -ge next_run ]; then
+        get_process_info
+        get_system_info
+        next_run=$((next_run + 5))
+    fi
 done
 
 trap cleanup SIGINT EXIT
