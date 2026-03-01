@@ -28,7 +28,8 @@ function startup () {
 
 function get_process_info ()
 {
-    sleep 1
+    local raw_stats=$(ps -axo pid,%cpu,%mem | grep -E "$pid_apm1|$pid_apm2|$pid_apm3|$pid_apm4|$pid_apm5|$pid_apm6")
+    echo $raw_stats
 }
 
 function get_system_info ()
