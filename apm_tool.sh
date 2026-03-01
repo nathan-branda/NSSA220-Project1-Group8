@@ -28,8 +28,13 @@ function startup () {
 
 function get_process_info ()
 {
-    local raw_stats=$(ps -axo pid,%cpu,%mem | grep -E "$pid_apm1|$pid_apm2|$pid_apm3|$pid_apm4|$pid_apm5|$pid_apm6")
-    echo $raw_stats
+    local proc_names=("APM1" "APM2" "APM3" "APM4" "APM5" "APM6")
+    for name in "${proc_names[@]}"; do
+        local raw_stats=$(ps -axo command,%cpu,%mem | grep -E "$name" | grep -v grep | awk '{printf ",%s,%s",$2,$3}')
+        if [ -n "$raw_stats" ]; then
+            echo "${next_run}${raw_stats}" >> "${name}_metrics.csv"
+        fi
+    done
 }
 
 function get_system_info ()
