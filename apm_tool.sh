@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ip_address="" #PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
+ip_address=10.118.15.1 #PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
 
 pid_apm1=""
 pid_apm2=""
@@ -24,6 +24,10 @@ function startup () {
     pid_apm5=$!
     ./project1_executables/APM6 $ip_address &
     pid_apm6=$!
+    local proc_names=("APM1" "APM2" "APM3" "APM4" "APM5" "APM6")
+    for name in "${proc_names[@]}"; do
+        echo "time,cpu,ram" > "${name}_metrics.csv"
+    done
 }
 
 function get_process_info ()
@@ -59,7 +63,7 @@ trap cleanup SIGINT EXIT
 
 while true; do
     #Implement some timer to make it once per 5 seconds
-    if [ $SECONDS -ge $next_run ]; then
+    if [ $SECONDS -ge rm $next_run ]; then
         get_process_info &
         get_system_info &
         next_run=$((next_run + 5))
