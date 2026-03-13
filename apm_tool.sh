@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ip_address=10.118.15.1 #PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
+ip_address=192.168.1.36 #PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
 
 pid_apm1=""
 pid_apm2=""
@@ -43,7 +43,8 @@ function get_process_info ()
 
 function get_system_info ()
 {
-    sleep 1
+    local iostat_data=$(iostat | grep nvme | awk '{print $4}')
+    echo $iostat_data
 }
 
 function cleanup () {
@@ -63,7 +64,7 @@ trap cleanup SIGINT EXIT
 
 while true; do
     #Implement some timer to make it once per 5 seconds
-    if [ $SECONDS -ge rm $next_run ]; then
+    if [ $SECONDS -ge $next_run ]; then
         get_process_info &
         get_system_info &
         next_run=$((next_run + 5))
