@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ip_address=192.168.1.36 #PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
+ip_address="" #PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
 
 pid_apm1=""
 pid_apm2=""
@@ -43,7 +43,7 @@ function get_process_info ()
 
 function get_system_info ()
 {
-    local iostat_data=$(iostat | grep nvme | awk '{print $4}')
+    local iostat_data=$(iostat | grep sda1 | awk '{print $4}')
     echo $iostat_data
 }
 
