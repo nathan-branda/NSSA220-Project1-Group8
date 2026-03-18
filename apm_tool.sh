@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ip_address="" #PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
+ip_address="10.118.6.131" #PLEASE HARDCODE TO WHATEVER MACHINE YOU ARE WORKING ON
 
 pid_apm1=""
 pid_apm2=""
@@ -45,7 +45,9 @@ function get_process_info ()
 
 function get_system_info ()
 {
-    local iostat_data=$(iostat | grep sda | awk '{print $4}')
+    local ifstat_data=$(ifstat | grep wlo1 | awk '{printf ",%s,%s,",$7,$9}')
+    local iostat_data=$(iostat | grep sda | awk '{printf "%s,",$4}')
+    #echo "${next_run}${ifstat_data}${iostat_data}"
     echo $iostat_data
 }
 
