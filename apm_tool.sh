@@ -45,7 +45,7 @@ function get_process_info ()
 
 function get_system_info ()
 {
-    local iostat_data=$(iostat | grep sda1 | awk '{print $4}')
+    local iostat_data=$(iostat | grep sda | awk '{print $4}')
     echo $iostat_data
 }
 
