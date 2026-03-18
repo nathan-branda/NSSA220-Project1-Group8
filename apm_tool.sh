@@ -28,6 +28,8 @@ function startup () {
     for name in "${proc_names[@]}"; do
         echo "time,cpu,ram" > "${name}_metrics.csv"
     done
+    
+    echo "time,rx_data_rate,tx_data_rate,disk_writes,disk_capacity" > system_metrics.csv
 }
 
 function get_process_info ()
