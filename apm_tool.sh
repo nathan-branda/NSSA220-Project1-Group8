@@ -47,7 +47,8 @@ function get_system_info ()
 {
     local ifstat_data=$(ifstat | grep ens192 | awk '{printf ",%s,%s,",$7,$9}')
     local iostat_data=$(iostat | grep sda | awk '{printf "%s,",$4}')
-    echo "${next_run}${ifstat_data}${iostat_data}" >> system_metrics.csv #add df data there
+    local df_data=$(df -hm / | awk '{print $4}' | grep -x '[0-9]\+')
+    echo "${next_run}${ifstat_data}${iostat_data}${df_data}" >> system_metrics.csv #add df data there
 }
 
 function cleanup () {
